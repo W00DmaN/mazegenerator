@@ -1,6 +1,7 @@
 # Maze generator
 
 **Generate mazes of different shapes and arbitrary sizes**
+/
 ![GeneratedMaze](/examples/Maze.png "Generated maze")
 ![PathMaze](/examples/Maze.png "Path without maze")
 
