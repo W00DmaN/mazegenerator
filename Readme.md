@@ -5,8 +5,7 @@
 ![GeneratedMaze](/examples/Maze.png "Generated maze")
 ![PathMaze](/examples/MazeWithPath.png "Path without maze")
 
-Maze generator can create rectangular mazes.\
-Maze generation use depth-first search  algorithm.
+Maze generator can create rectangular mazes and use depth-first search  algorithm.
 
 ## Dependencies
 
