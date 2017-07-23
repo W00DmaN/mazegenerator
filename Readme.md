@@ -3,7 +3,7 @@
 **Generate mazes of different shapes and arbitrary sizes**
 
 ![GeneratedMaze](/examples/Maze.png "Generated maze")
-![PathMaze](/examples/MazeWithPath.png "Path without maze")
+![PathMaze](/examples/MazeWithPath.png "Path through maze")
 
 Maze generator can create rectangular mazes and use depth-first search  algorithm.
 

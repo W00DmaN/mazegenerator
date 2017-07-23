@@ -41,7 +41,7 @@ public class MazeGenerated {
         this.pathMark = pathMark;
     }
 
-    public Maze generateLiberint() {
+    public Maze generate() {
         startArrayValue(wallMark);
 
         int visitCall = getAllCellCount();
@@ -51,14 +51,13 @@ public class MazeGenerated {
         stack.push(startCell);
         Cell nowCell = startCell;
         do {
-            Cell cell = nowCell;
-            List<Cell> neighbours = Util.getNeighbour(array, cell, 2, new int[]{wallMark});
-            this.array[cell.getX()][cell.getY()] = emptyCellMark;
+            List<Cell> neighbours = Util.getNeighbour(array, nowCell, 2, new int[]{wallMark});
+            this.array[nowCell.getX()][nowCell.getY()] = emptyCellMark;
             if (neighbours.isEmpty()) {
                 nowCell = stack.pop();
             } else {
                 Cell neighbour = Util.getRandomNeighbour(neighbours);
-                dropWall(cell, neighbour);
+                dropWall(nowCell, neighbour);
                 stack.push(neighbour);
                 nowCell = neighbour;
                 visitCall--;

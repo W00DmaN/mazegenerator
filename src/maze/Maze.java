@@ -33,15 +33,25 @@ public class Maze {
         this.finishCell = builder.finishCell;
     }
 
+    /**
+     * Generate path through maze and mark this on array.
+     * @param start - maze cell where start path
+     * @param finish - maze cell where finish path
+     * @return true if could create path, and false if couldn't
+     */
     public boolean generatedPath(Cell start, Cell finish) {
+
+        if (isWall(start) || isWall(finish)) {
+            return false;
+        }
+
         Stack<Cell> stack = new Stack<>();
         stack.push(start);
         Cell nowCell = start;
         Cell lostCell = null;
         do {
-            Cell cell = nowCell;
-            this.array[cell.getX()][cell.getY()] = pathMark;
-            List<Cell> neighbours = Util.getNeighbour(array, cell, 1, new int[]{emptyCellMark, playerMark});
+            this.array[nowCell.getX()][nowCell.getY()] = pathMark;
+            List<Cell> neighbours = Util.getNeighbour(array, nowCell, 1, new int[]{emptyCellMark, playerMark});
             if (neighbours.isEmpty()) {
                 nowCell = stack.pop();
                 lostCell = nowCell;
@@ -66,6 +76,10 @@ public class Maze {
         }
 
         return true;
+    }
+
+    private boolean isWall(Cell cell){
+        return this.array[cell.getX()][cell.getY()] == wallMark;
     }
 
     // print to console all maze

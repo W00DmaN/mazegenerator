@@ -20,7 +20,7 @@ public class Main {
         int heightMaze = keyboard.nextInt();
 
         MazeGenerated mazeGenerated = new MazeGenerated.Builder(widthMaze, heightMaze).build();
-        Maze maze = mazeGenerated.generateLiberint();
+        Maze maze = mazeGenerated.generate();
 
         maze.printMaze("█", ConsoleColor.BLACK, ConsoleColor.GREEN, ConsoleColor.WHITE, ConsoleColor.RED);
 
