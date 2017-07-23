@@ -1,8 +1,8 @@
-import java.util.Scanner;
-
 import maze.ConsoleColor;
 import maze.Maze;
 import maze.MazeGenerated;
+
+import java.util.Scanner;
 
 /**
  * Class for run demo.
@@ -19,16 +19,16 @@ public class Main {
         System.out.println("Set height maze: ");
         int heightMaze = keyboard.nextInt();
 
-        MazeGenerated mazeGenerated = new MazeGenerated(widthMaze,heightMaze,-1,1,-100, 2);
+        MazeGenerated mazeGenerated = new MazeGenerated.Builder(widthMaze, heightMaze).build();
         Maze maze = mazeGenerated.generateLiberint();
 
-        maze.printMaze("█",ConsoleColor.BLACK, ConsoleColor.GREEN, ConsoleColor.WHITE, ConsoleColor.RED);
+        maze.printMaze("█", ConsoleColor.BLACK, ConsoleColor.GREEN, ConsoleColor.WHITE, ConsoleColor.RED);
 
         System.out.println("***********************************************************************");
 
         boolean isPath = maze.generatedPath(maze.getStartCell(), maze.getFinishCell());
-        if(isPath){
-            maze.printMaze("█",ConsoleColor.BLACK, ConsoleColor.GREEN, ConsoleColor.WHITE, ConsoleColor.RED);
+        if (isPath) {
+            maze.printMaze("█", ConsoleColor.BLACK, ConsoleColor.GREEN, ConsoleColor.WHITE, ConsoleColor.RED);
         } else {
             System.out.println("Not a path!");
         }

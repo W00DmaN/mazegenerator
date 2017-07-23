@@ -1,15 +1,12 @@
 package maze;
 
 import java.util.List;
-import java.util.Random;
 import java.util.Stack;
 
 /**
  * Maze. Can write maze in console and find a way through the maze.
  */
 public class Maze {
-
-    private Random random = new Random();
 
     private int[][] array;
     private int width;
@@ -22,19 +19,18 @@ public class Maze {
     private Cell startCell;
     private Cell finishCell;
 
-    public Maze(int[][] array, int width, int height, int wallMark, int emptyCellMark, int pathMark, int playerMark, Cell start, Cell finish) {
-        this.array = array;
+    private Maze(Builder builder) {
+        this.array = builder.array;
 
-        this.width = width;
-        this.height = height;
+        this.width = array.length;
+        this.height = array[0].length;
 
-        this.wallMark = wallMark;
-        this.emptyCellMark = emptyCellMark;
-        this.pathMark = pathMark;
-        this.playerMark = playerMark;
-
-        this.startCell = start;
-        this.finishCell = finish;
+        this.wallMark = builder.wallMark;
+        this.emptyCellMark = builder.emptyCellMark;
+        this.pathMark = builder.pathMark;
+        this.playerMark = builder.playerMark;
+        this.startCell = builder.startCell;
+        this.finishCell = builder.finishCell;
     }
 
     public boolean generatedPath(Cell start, Cell finish) {
@@ -50,7 +46,7 @@ public class Maze {
                 nowCell = stack.pop();
                 lostCell = nowCell;
             } else {
-                Cell neighbour = Util.getRandomNeighbour(neighbours, random);
+                Cell neighbour = Util.getRandomNeighbour(neighbours);
                 if (null != lostCell) {
                     stack.push(lostCell);
                 }
@@ -108,4 +104,60 @@ public class Maze {
             }
         }
     }
+
+    public static class Builder {
+        private int[][] array;
+        private int wallMark = -1;
+        private int emptyCellMark = 0;
+        private int pathMark = -100;
+        private int playerMark = 2;
+        private Cell startCell;
+        private Cell finishCell;
+
+        public Builder(int[][] array, Cell startCell, Cell finishCell) {
+            this.array = array;
+            this.startCell = startCell;
+            this.finishCell = finishCell;
+        }
+
+        public Builder setArray(int[][] value) {
+            this.array = value;
+            return this;
+        }
+
+        public Builder setWallMark(int wallMark) {
+            this.wallMark = wallMark;
+            return this;
+        }
+
+        public Builder setEmptyCellMark(int emptyCellMark) {
+            this.emptyCellMark = emptyCellMark;
+            return this;
+        }
+
+        public Builder setPathMark(int pathMark) {
+            this.pathMark = pathMark;
+            return this;
+        }
+
+        public Builder setPlayerMark(int playerMark) {
+            this.playerMark = playerMark;
+            return this;
+        }
+
+        public Builder setStartCell(Cell startCell) {
+            this.startCell = startCell;
+            return this;
+        }
+
+        public Builder setFinishCell(Cell finishCell) {
+            this.finishCell = finishCell;
+            return this;
+        }
+
+        public Maze build() {
+            return new Maze(this);
+        }
+    }
+
 }

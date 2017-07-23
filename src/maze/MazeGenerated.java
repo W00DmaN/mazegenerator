@@ -20,22 +20,16 @@ public class MazeGenerated {
 
     private Random random = new Random();
 
-    public MazeGenerated(int width, int height, int wallMark, int emptyCellMark, int pathMark, int playerMark) {
-        if (width % 2 == 0) {
-            width++;
-        }
-        if (height % 2 == 0) {
-            height++;
-        }
-        this.array = new int[width][height];
+    public MazeGenerated(Builder builder) {
+        this.array = new int[builder.width][builder.height];
 
-        this.width = width;
-        this.height = height;
+        this.width = builder.width;
+        this.height = builder.height;
 
-        this.wallMark = wallMark;
-        this.emptyCellMark = emptyCellMark;
-        this.pathMark = pathMark;
-        this.playerMark = playerMark;
+        this.wallMark = builder.wallMark;
+        this.emptyCellMark = builder.emptyCellMark;
+        this.pathMark = builder.pathMark;
+        this.playerMark = builder.playerMark;
     }
 
     public MazeGenerated(int[][] array, int wallMark, int emptyCellMark, int pathMark) {
@@ -46,7 +40,6 @@ public class MazeGenerated {
         this.height = array[0].length;
         this.pathMark = pathMark;
     }
-
 
     public Maze generateLiberint() {
         startArrayValue(wallMark);
@@ -64,7 +57,7 @@ public class MazeGenerated {
             if (neighbours.isEmpty()) {
                 nowCell = stack.pop();
             } else {
-                Cell neighbour = Util.getRandomNeighbour(neighbours, random);
+                Cell neighbour = Util.getRandomNeighbour(neighbours);
                 dropWall(cell, neighbour);
                 stack.push(neighbour);
                 nowCell = neighbour;
@@ -73,7 +66,10 @@ public class MazeGenerated {
         } while (visitCall > 1);
         Cell start = createEntry();
         Cell finish = createExit();
-        return new Maze(this.array, width, height, wallMark, emptyCellMark, pathMark, playerMark, start, finish);
+        return new Maze.Builder(array, start, finish).setWallMark(wallMark)
+                .setEmptyCellMark(emptyCellMark)
+                .setPathMark(pathMark)
+                .setPlayerMark(playerMark).build();
     }
 
     private Cell createExit() {
@@ -141,6 +137,53 @@ public class MazeGenerated {
     //Get all mandatory cell for visit during generation maze.
     private int getAllCellCount() {
         return ((width + 1) / 2 - 1) * ((height + 1) / 2 - 1);
+    }
+
+    public static class Builder {
+
+        private int wallMark = -1;
+        private int emptyCellMark = 0;
+        private int pathMark = -100;
+        private int playerMark = 2;
+
+        private int width;
+        private int height;
+
+        public Builder(int width, int height) {
+            if (width % 2 == 0) {
+                width++;
+            }
+            if (height % 2 == 0) {
+                height++;
+            }
+            this.width = width;
+            this.height = height;
+        }
+
+        public Builder setWallMark(int value) {
+            this.wallMark = value;
+            return this;
+        }
+
+        public Builder setEmptyCellMark(int value) {
+            this.emptyCellMark = value;
+            return this;
+        }
+
+        public Builder setPathMark(int value) {
+            this.pathMark = value;
+            return this;
+        }
+
+        public Builder setPlayerMark(int value) {
+            this.playerMark = value;
+            return this;
+        }
+
+        public MazeGenerated build() {
+            return new MazeGenerated(this);
+        }
+
     }
 
 }

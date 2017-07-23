@@ -9,8 +9,10 @@ import java.util.Random;
  */
 public final class Util {
 
+    private static Random random = new Random();
+
     //search all cell around with goodMarks values
-    public static List<Cell> getNeighbour(int[][] array,Cell cell, int step, int[] goodMarks) {
+    public static List<Cell> getNeighbour(int[][] array, Cell cell, int step, int[] goodMarks) {
         List<Cell> neighbourCell = new ArrayList<>();
         //up
         neighbourCell.add(new Cell(cell.getX(), cell.getY() - step));
@@ -34,7 +36,7 @@ public final class Util {
     }
 
     //get random Cell from list cell
-    public static Cell getRandomNeighbour(List<Cell> neighbours, Random random) {
+    public static Cell getRandomNeighbour(List<Cell> neighbours) {
         if (neighbours.size() == 1) {
             return neighbours.get(0);
         } else {
