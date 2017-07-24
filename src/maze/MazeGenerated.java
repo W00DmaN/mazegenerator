@@ -62,7 +62,7 @@ public class MazeGenerated {
                 nowCell = neighbour;
                 visitCall--;
             }
-        } while (visitCall > 1);
+        } while (visitCall > 0 && !stack.isEmpty());
         Cell start = createEntry();
         Cell finish = createExit();
         return new Maze.Builder(array, start, finish).setWallMark(wallMark)

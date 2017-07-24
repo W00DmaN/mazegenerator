@@ -35,7 +35,8 @@ public class Maze {
 
     /**
      * Generate path through maze and mark this on array.
-     * @param start - maze cell where start path
+     *
+     * @param start  - maze cell where start path
      * @param finish - maze cell where finish path
      * @return true if could create path, and false if couldn't
      */
@@ -78,12 +79,22 @@ public class Maze {
         return true;
     }
 
-    private boolean isWall(Cell cell){
+    private boolean isWall(Cell cell) {
         return this.array[cell.getX()][cell.getY()] == wallMark;
     }
 
-    // print to console all maze
-    public void printMaze(String symbol, ConsoleColor wall, ConsoleColor path, ConsoleColor empty, ConsoleColor player) {
+    /**
+     * Print in console all maze.
+     * <b>Use if your console work with ANSI</>
+     * If your console not work with ANSI use method Maze.printSymbolMaze
+     *
+     * @param symbol - symbol for print any cell maze
+     * @param wall   - color for wall cell.
+     * @param path   - color for path cell.
+     * @param empty  - color for empty cell.
+     * @param player - color for player cell.
+     */
+    public void printColorMaze(String symbol, ConsoleColor wall, ConsoleColor path, ConsoleColor empty, ConsoleColor player) {
         for (int[] line : this.array) {
             StringBuilder sb = new StringBuilder();
             for (int value : line) {
@@ -99,6 +110,33 @@ public class Maze {
             }
             System.out.println(sb);
         }
+    }
+
+    /**
+     * Print in console all maze use different characters.
+     *
+     * @param wall   - string for print wall cell.
+     * @param path   - string for print path cell
+     * @param empty  - string for print empty cell
+     * @param player - string for print player cell
+     */
+    public void printSymbolMaze(String wall, String path, String empty, String player) {
+        StringBuilder sb = new StringBuilder();
+        for (int[] line : this.array) {
+            for (int value : line) {
+                if (value == wallMark) {
+                    sb.append(wall);
+                } else if (value == pathMark) {
+                    sb.append(path);
+                } else if (value == emptyCellMark) {
+                    sb.append(empty);
+                } else if (value == playerMark) {
+                    sb.append(player);
+                }
+            }
+            sb.append("\n");
+        }
+        System.out.println(sb);
     }
 
     public Cell getStartCell() {
