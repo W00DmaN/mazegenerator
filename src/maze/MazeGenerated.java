@@ -53,6 +53,11 @@ public class MazeGenerated {
         do {
             List<Cell> neighbours = Util.getNeighbour(array, nowCell, 2, new int[]{wallMark});
             this.array[nowCell.getX()][nowCell.getY()] = emptyCellMark;
+            //last cell mark
+            if (visitCall == 1) {
+                visitCall--;
+            }
+
             if (neighbours.isEmpty()) {
                 nowCell = stack.pop();
             } else {
@@ -62,7 +67,7 @@ public class MazeGenerated {
                 nowCell = neighbour;
                 visitCall--;
             }
-        } while (visitCall > 0 && !stack.isEmpty());
+        } while (visitCall > 0);
         Cell start = createEntry();
         Cell finish = createExit();
         return new Maze.Builder(array, start, finish).setWallMark(wallMark)
